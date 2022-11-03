@@ -25,4 +25,13 @@ const user = async (req, res) => {
   }
 };
 
-module.exports = { user };
+const getUser = async (_req, res) => {
+  try {
+    const users = await userService.getAll();
+    return res.status(200).json(users);
+  } catch (err) {
+    res.status(502).json({ message: 'Deu ruim!' });
+  }
+};
+
+module.exports = { user, getUser };

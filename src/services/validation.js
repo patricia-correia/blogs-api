@@ -6,10 +6,18 @@ const validateLogin = async ({ email }) => {
   return user;
 };
 
+const getAll = async () => {
+  const user = await User.findAll({
+    attributes: { exclude: ['password'] },
+  });
+
+  return user;
+};
+
 const getUser = async (user) => {
   const newUser = await User.create(user);
 
   return newUser;
 };
 
-module.exports = { validateLogin, getUser };
+module.exports = { validateLogin, getAll, getUser };
