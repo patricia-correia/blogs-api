@@ -1,4 +1,4 @@
-const categoryService = require('../services/validation');
+const categoryService = require('../services/category.service');
 const { validateBodyCategory } = require('../validated/auth.service');
 
 const category = async (req, res) => {

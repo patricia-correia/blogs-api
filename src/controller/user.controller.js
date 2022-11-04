@@ -1,4 +1,5 @@
-const userService = require('../services/validation');
+const userService = require('../services/user.service');
+const { validateLogin } = require('../services/login.service');
 const { validateNewUser } = require('../validated/auth.service');
 const { createToken } = require('../utils/jwt.util');
 
@@ -9,12 +10,12 @@ const user = async (req, res) => {
       return res.status(400).json({ message: error.message });
     }
 
-    const exist = await userService.validateLogin(req.body);
+    const exist = await validateLogin(req.body);
     if (exist) {
       return res.status(409).json({ message: 'User already registered' });
     }
 
-    const newUser = await userService.getUser(req.body);
+    const newUser = await userService.createUsers(req.body);
 
     const { password: _, ...userWithoutPassword } = newUser.dataValues;
 
@@ -42,7 +43,7 @@ const getUserById = async (req, res) => {
     if (!users) return res.status(404).json({ message: 'User does not exist' });
     return res.status(200).json(users);
   } catch (err) {
-    res.status(503).json({ message: 'Deu ruim no id' });
+    res.status(503).json({ message: 'Deu ruim no user id' });
   }
 };
 
