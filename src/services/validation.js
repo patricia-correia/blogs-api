@@ -32,7 +32,13 @@ const getUserId = async (id) => {
 
 const createCategory = async (name) => {
   const newCategory = await Category.create(name);
+  
   return newCategory;
 };
 
-module.exports = { validateLogin, getAll, getUser, getUserId, createCategory };
+const getAllCategory = async () => {
+  const categories = await Category.findAll();
+  return categories;
+};
+
+module.exports = { validateLogin, getAll, getUser, getUserId, createCategory, getAllCategory };

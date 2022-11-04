@@ -18,4 +18,13 @@ const category = async (req, res) => {
   }
 };
 
-module.exports = { category };
+const getCategory = async (_req, res) => {
+  try {
+    const categories = await categoryService.getAllCategory();
+    return res.status(200).json(categories);
+  } catch (err) {
+    res.status(506).json({ message: 'Deu ruim' });
+  }
+};
+
+module.exports = { category, getCategory };
