@@ -29,8 +29,26 @@ const validateBodyCategory = (body) =>
     }),
   }).validate(body);
 
+const error = 'Some required fields are missing';
+const validatePost = (body) =>
+Joi.object({
+  title: Joi.string().required().messages({
+    'any.required': error,
+    'string.empty': error,
+  }),
+  content: Joi.string().required().messages({
+    'any.required': error,
+    'string.empty': error,
+  }),
+  categoryIds: Joi.array().required().messages({
+    'any.required': 'one or more "categoryIds" not found',
+    'array.empty': error,
+  }),
+}).validate(body);
+
 module.exports = {
   validateBody,
   validateNewUser,
   validateBodyCategory,
+  validatePost,
 };
