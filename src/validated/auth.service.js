@@ -22,7 +22,15 @@ const validateNewUser = (body) =>
     image: Joi.string(),
   }).validate(body);
 
+const validateBodyCategory = (body) =>
+  Joi.object({
+    name: Joi.string().required().messages({
+      'string.required': '"name" is required',
+    }),
+  }).validate(body);
+
 module.exports = {
   validateBody,
   validateNewUser,
+  validateBodyCategory,
 };

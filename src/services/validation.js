@@ -1,4 +1,5 @@
 const { User } = require('../models');
+const { Category } = require('../models');
 
 const validateLogin = async ({ email }) => {
   const user = await User.findOne({ where: { email } });
@@ -29,4 +30,9 @@ const getUserId = async (id) => {
   return user;
 };
 
-module.exports = { validateLogin, getAll, getUser, getUserId };
+const createCategory = async (name) => {
+  const newCategory = await Category.create(name);
+  return newCategory;
+};
+
+module.exports = { validateLogin, getAll, getUser, getUserId, createCategory };
