@@ -36,8 +36,23 @@ const getPostById = async (id) => {
 return post;
 };
 
+const editPost = async (id, { title, content }) => {
+  const [post] = await BlogPost.update(
+    { title, content },
+    { where: { id } },
+    { include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category,
+        as: 'categories',
+        attributes: ['id', 'name'],
+        through: { attributes: [] } }],
+    },
+  );
+  return post;
+};
+
 module.exports = {
   createPost,
   getAllPost,
   getPostById,
+  editPost,
 };

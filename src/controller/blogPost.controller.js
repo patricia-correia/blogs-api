@@ -1,4 +1,5 @@
 const postService = require('../services/blogPost.service');
+const { updateBody } = require('../validated/auth.service');
 
 const getById = async (req, res) => {
   try {
@@ -24,11 +25,33 @@ const getPostById = async (req, res) => {
     return res.status(404).json({ message: 'Post does not exist' });
   } catch (e) {
     console.log(e.message);
-    res.status(500).json({ message: 'Something went wrong' });
+    res.status(509).json({ message: 'Deur ruim!' });
+  }
+};
+
+const editPost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { error } = updateBody(req.body);
+    
+    if (error) {
+      return res.status(400).json({ message: 'Some required fields are missing' });
+    }
+    const postEdit = await postService.editPost(id, req.body);
+    
+    if (!postEdit > 0) {
+      return res.status(400).json({ message: 'Post was not edited' });
+    }
+    
+    const post = await postService.getPostById(id);
+    return res.status(200).json(post);
+  } catch (err) {
+    return res.status(510).json({ message: 'Deu ruim!' });
   }
 };
 
 module.exports = {
   getById,
   getPostById,
+  editPost,
 };

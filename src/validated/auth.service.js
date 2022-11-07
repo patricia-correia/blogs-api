@@ -46,9 +46,16 @@ const error = 'Some required fields are missing';
     }),
   }).validate(body);
 
+const updateBody = (body) =>
+  Joi.object({
+    title: Joi.string().required(),
+    content: Joi.string().required(),
+  }).validate(body);
+
 module.exports = {
   validateBody,
   validateNewUser,
   validateBodyCategory,
   validatePost,
+  updateBody,
 };
