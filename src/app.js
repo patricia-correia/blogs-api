@@ -20,8 +20,11 @@ app.get('/user', authorizationValidate, userController.getUser);
 app.get('/user/:id', authorizationValidate, userController.getUserById);
 app.get('/categories', authorizationValidate, categoryController.getCategory);
 app.get('/post', authorizationValidate, blogPostController.getById);
+app.get('/post/search', authorizationValidate, blogPostController.getPostsSearch);
 app.get('/post/:id', authorizationValidate, blogPostController.getPostById);
 app.put('/post/:id', authorizationValidate, verifyPostEdit, blogPostController.editPost);
+app.delete('/post/:id', authorizationValidate, verifyPostEdit, blogPostController.deletePosts);
+app.delete('/user/me', authorizationValidate, userController.deleteUsers);
 // É importante exportar a constante `app`,
 // para que possa ser utilizada pelo arquivo `src/server.js`
 module.exports = app;
