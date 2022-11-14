@@ -1,6 +1,22 @@
 const postService = require('../services/blogPost.service');
 const { updateBody } = require('../validated/auth.service');
 
+const createPost = async (req, res) => {
+  try {
+    const { body } = req;
+
+  const { type, message } = await postService.post(body);
+
+  if (type) {
+    return res.status(400).json({ message });
+  }
+
+  return res.status(201).json(message);
+  } catch (err) {
+      res.status(515).json({ message: 'Deu ruim!' });
+  }
+};
+
 const getById = async (req, res) => {
   try {
     const { id } = req.user;
@@ -23,8 +39,7 @@ const getPostById = async (req, res) => {
     if (post) return res.status(200).json(post);
 
     return res.status(404).json({ message: 'Post does not exist' });
-  } catch (e) {
-    console.log(e.message);
+  } catch (err) {
     res.status(509).json({ message: 'Deur ruim!' });
   }
 };
@@ -81,6 +96,7 @@ const getPostsSearch = async (req, res) => {
 };
 
 module.exports = {
+  createPost,
   getById,
   getPostById,
   editPost,
